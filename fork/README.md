@@ -27,9 +27,9 @@
 - * pid=0:回收当前进程组的子进程
 - * pid<0:pid(加减号)，用于释放不是同一个进程组的子进程
 - 返回值
-- * -1:回收失败，没有可回收的子进程
-- * >0:被回收的子进程的pid
-- * 0:非堵塞时代表子进程还处于运行状态
+- * ret=-1:回收失败，没有可回收的子进程
+- * ret>0:被回收的子进程的pid
+- * ret=0:非堵塞时代表子进程还处于运行状态
 # 进程间通信IPC(InterProcess Communication)
 ## 进程间通信常用方式
 1. 管道-简单，类似文件操作
@@ -83,31 +83,31 @@
 - long size = fpathconf(fd, _PC_PIPE_BUF);
 ### fifo 有名管道 
 1. 特点
-- 有名管道 类型p
-- 伪文件，在磁盘大小永远为0
-- 在内核中有一个对应的缓冲区
+- * 有名管道 类型p
+- * 伪文件，在磁盘大小永远为0
+- * 在内核中有一个对应的缓冲区
 2. 使用场景
-- 没有血缘关系的进程间通信
+- * 没有血缘关系的进程间通信
 3. 创建方式
-- shell命令: mkfifo 管道名
-- 函数:mkfifo 
-- * int mkfifo(const char \*pathname, mode_t mode);
+- * shell命令: mkfifo 管道名
+- * 函数:mkfifo 
+- * - int mkfifo(const char \*pathname, mode_t mode);
 - * - 权限:mode&(~umask)
 4. 使用方式
-- fifo文件可以使用IO函数进行操作
-- open/close
-- read/write
-- 不能执行lseek操作
+- * fifo文件可以使用IO函数进行操作
+- * open/close
+- * read/write
+- * 不能执行lseek操作
 5. 进程间通信
-- 有名管道文件可以想普通文件那样进行读写，区别是管道堵塞
-- a.cpp :读
-- * int fd = open("myfifo", O_RDONLY);
-- * read(fd, buf, sizeof(buf));
-- * close(fd);
-- b.cpp :写
-- * int fd = open("myfifo", O_WRONLY);
-- * write(fd, buf, sizeof(buf));
-- * close(fd);
+- * 有名管道文件可以想普通文件那样进行读写，区别是管道堵塞
+- * a.cpp :读
+- * - int fd = open("myfifo", O_RDONLY);
+- * - read(fd, buf, sizeof(buf));
+- * - close(fd);
+- * b.cpp :写
+- * - int fd = open("myfifo", O_WRONLY);
+- * - write(fd, buf, sizeof(buf));
+- * - close(fd);
 ## 内存间映射区
 ### mmap 创建内存映射区
 ```c
