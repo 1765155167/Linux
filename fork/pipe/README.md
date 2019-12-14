@@ -1,35 +1,3 @@
-## fork
-读时共享写时复制
-父子进程变量地址(虚拟地址)是一样的
-但在物理内存上不是同一块
-## 常用函数
-- getpid();
-- getppid();
-- execl("/home/hqf/a.out", "666", "arg", NULL);
-- execlp("ls", "666", "arg", NULL);
-## wait-堵塞函数
-- pid_t wait(int\* status);
-- 返回值
-- * >0:回收子进程的pid
-- * -1:没有子进程可以回收
-- status
-- * 获取退出时候的返回值
-- * WIFEXITED(status) > 0 :正常退出
-- * WIFSIGNALED(status) > 0 :返回信号编号
-## waitpid 
-- pid_t waitpid(pid_t pid, int\* status, int options);
-- options:可选择堵塞或者非堵塞
-- * options=0:阻塞函数
-- * options=WNOHANG:非堵塞
-- pid:可选择回收那个子进程
-- * pid>0:某个子进程的pid
-- * pid=-1:回收所有的子进程
-- * pid=0:回收当前进程组的子进程
-- * pid<0:pid(加减号)，用于释放不是同一个进程组的子进程
-- 返回值
-- * ret=-1:回收失败，没有可回收的子进程
-- * ret>0:被回收的子进程的pid
-- * ret=0:非堵塞时代表子进程还处于运行状态
 # 进程间通信IPC(InterProcess Communication)
 ## 进程间通信常用方式
 1. 管道-简单，类似文件操作
@@ -66,8 +34,8 @@
 - * 读端全部关闭
 - * - 管道破裂，进程被终止:内核给当前进程发送SIGPIPE信号
 - * 读端没有全部关闭
-- * - 缓冲区写满了:waite 堵塞
-- * - 缓冲区没有满:waite 正常写
+- * - 缓冲区写满了:write 堵塞
+- * - 缓冲区没有满:write 正常写
 ### 如何设置非堵塞
 * 默认读写两端都堵塞
 * 设置读端为非堵塞
@@ -108,27 +76,3 @@
 - * - int fd = open("myfifo", O_WRONLY);
 - * - write(fd, buf, sizeof(buf));
 - * - close(fd);
-## 内存间映射区
-### mmap 创建内存映射区
-```c
-#include <sys/mman.h>
-void* mmap(
-    void* addr,//首地址 为NULL时系统自动分配地址
-    size_t length,//大小,不能为0,一般为文件的大小
-    int prot, //权限 PROT_EXEC PORT_READ(读，必须设置) PORT_WRITE(写) PORT_NONE
-    int flags,//标志位参数 MAP_SHARED(共享的，数据会同步到磁盘) MAP_PRIVATE(私有的)
-    int fd, //文件描述符 要映射的文件(open)
-    off_t offset,//映射文件偏移量(必须是4k的整数倍),一般为0
-    );
-```
-- 返回值:
-- * 成功:映射区的首地址
-- * 失败:MAP_FAILED:(void\* -1)
-### munmap 释放内存映射区
-```c
-#include <sys/mman.h>
-int mumap(void* addr, size_t length);
-```
-- 参考mmap.cpp代码
-# 判断文件是否存在
-- access("fifo", F_OK);
