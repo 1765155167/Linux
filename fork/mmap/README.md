@@ -38,3 +38,4 @@ int munmap(void *addr, size_t length);
 2. 不能使用匿名映射区域，只能借助磁盘文件映射通信
 # 判断文件是否存在
 - access("fifo", F_OK);
+
