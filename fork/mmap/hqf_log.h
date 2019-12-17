@@ -13,4 +13,13 @@ void check(std::string str, int ret)
     }
 }
 
+void check(std::string str, void* ret, void* errnum)
+{
+    if(ret == errnum)
+    {
+        perror(str.c_str());
+        exit(-1);
+    }
+}
+
 #endif

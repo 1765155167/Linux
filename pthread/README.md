@@ -136,6 +136,9 @@ pthread_cond_wait(
     pthread_mutex_t* restrict mutex
                  );
 //限时等待一个条件变量,将已经加锁的mutex解锁
+struct timespec abstime;
+time_t cur = time(NULL);
+abstime.tv_sec = cur+1;
 pthread_cond_timedwait(
     pthread_cond_t* cond,
     pthread_mutex_t* restrict mutex,
