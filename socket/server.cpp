@@ -17,11 +17,12 @@ int main()
     check("socket", server_fd);
 
     struct sockaddr_in server_addr;
+    bzero(&server_addr.sin_zero, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(6666);
-    server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    inet_pton(AF_INET, "127.0.0.1", &server_addr.sin_addr.s_addr);
+    //server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
     //server_addr.sin_addr.s_addr = htonl(INADDR_ANY);//绑定本地有效的任意IP
-    bzero(&server_addr.sin_zero,8);
     int ret = bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr));
     check("bind", ret);
 
@@ -49,9 +50,9 @@ int main()
             }
         }else if(pid == 0) {
             char* ipbuf = new char[50];
-            //check("inet_ntop", (void*)inet_ntop(AF_INET, &client_addr.sin_addr.s_addr, ipbuf, sizeof(client_addr)), NULL);
-            ipbuf = inet_ntoa(client_addr.sin_addr);
-            std::cout << "link " << ipbuf << std::endl;
+            check("inet_ntop", (void*)inet_ntop(AF_INET, &client_addr.sin_addr.s_addr, ipbuf, sizeof(client_addr)), NULL);
+            //ipbuf = inet_ntoa(client_addr.sin_addr);
+            std::cout << "clent ip:" << ipbuf << "port: " << ntohs(client_addr.sin_port) << std::endl;
             while(true) {
                 char* buf = new char[1024];
                 ret = read(client_fd, buf, sizeof(1024));
