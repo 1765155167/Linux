@@ -153,12 +153,17 @@ FD_ZERO(&readfds);
 FD_SET(fd1, &readfds);
 FD_SET(fd2, &readfds);
 FD_SET(fd3, &readfds);
-int sum = select();
-for(int i = 0; i < sum; i++)
+int sum = select();//return event num
+if(FD_ISSET(fd1, &readfds) != 0)
 {
-    if(FD_ISSET(fd1, &readfds) != 0)
-    {
-        //fd1读事件
-    }
+    //fd1读事件
+}
+if(FD_ISSET(fd2, &readfds) != 0)
+{
+    //fd2读事件
+}
+if(FD_ISSET(fd3, &readfds) != 0)
+{
+    //fd3读事件
 }
 ```
