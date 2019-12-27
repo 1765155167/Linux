@@ -1,4 +1,4 @@
-# Socket 套接字
+#Socket 套接字
 ## TCP协议
 ### 三次握手
 SYN ACK 
@@ -167,3 +167,11 @@ if(FD_ISSET(fd3, &readfds) != 0)
     //fd3读事件
 }
 ```
+## epoll
+### epoll_create()
+1. int epoll_create(int size);
+### epoll_ctl()
+op: EPOLL_CTL_ADD EPOLL_CTL_DEL EPOLL_CTL_MOD
+events: EPOLLIN/OUT/ERR
+
+### epoll_wait()
