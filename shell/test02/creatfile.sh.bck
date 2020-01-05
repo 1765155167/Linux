@@ -1,0 +1,23 @@
+#!/bin/bash
+
+echo "Please input file "
+read FileArg
+
+isfile()
+{
+    filename=$1
+    if [ -f "$filename" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+
+for file in $FileArg; do
+    if isfile file; then
+        echo "$file have ."
+    else
+        touch $file
+    fi
+done
