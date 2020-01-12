@@ -50,7 +50,7 @@ printf "hello %d \n" $NUM
 echo 'hello "xiaoming" $[NUM] '
 echo "hello "xiaoming" $[NUM] "
 
-test $NUM -eq 76
+est $NUM -eq 76
 echo '$NUM -eq 76' $?
 
 test $NUM -lt 76

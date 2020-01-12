@@ -1,20 +1,17 @@
 #!/bin/bash
 
-echo $0 #argv[0]
-echo $1 #argv[1]
-echo $2
-echo $3
-echo $4
-
-echo '$#:'$# #argc - 1
-echo '$@:'$@ #argv
-echo '$$:'$$ #pid
-
-echo "---------------------------"
-
-num=$#
-while [ $num -gt 0 ]; do
-    echo $1
-    shift
-    num=$[num-1]
+echo "if test -----------------------"
+echo -n "Peaes input passwd"
+read PASSWD
+if [ "$PASSWD" = "hqf666123" ]; then
+    echo "success..."
+fi
+echo "if test end --------------------"
+echo -n "Please input passwd"
+read PASSWD
+count=3
+while [ "$PASSWD" != "hqf666123" -a $count -ge 0 ]; do
+    echo "passwd ere please input again."
+    read PASSWD
 done
+echo ""

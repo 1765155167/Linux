@@ -1,10 +1,9 @@
 #!/bin/bash
 
-i=0
+i=1
 sum=0
 while [ $i -le 100 ]; do
-    i=$[i+1]
     sum=$[sum+i]
+    i=$[i+1]
 done
-
-echo "sum:$sum"
+echo "sum(1-100)=$sum"
