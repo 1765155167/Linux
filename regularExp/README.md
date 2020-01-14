@@ -38,4 +38,20 @@
 egrep "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" regex
 egrep "^([0-9]{1,3}\.){3}[0-9]{1,3}$" regex
 ```
+## C语言中使用正则表达式
+```c
+#include <sys/types.h>
+#include <regex.h>
 
+int regcomp(regex_t *preg, const char *regex, int cflags);
+int regexec(const regex_t *preg, const char *string, size_t nmatch,
+            regmatch_t pmatch[], int eflags);
+size_t regerror(int errcode, const regex_t *preg, char *errbuf,
+                size_t errbuf_size);
+void regfree(regex_t *preg);
+```
+```shell
+./a.out "^([0-9]{1,3}\.){3}[0-9]{1,3}$" "192.168.0.1"
+find ./ -maxdepth 1 -name "*.cpp" -print0 | xargs -0 ls -lh
+grep -R "struct task_struct {" /usr/src/ -n
+```
